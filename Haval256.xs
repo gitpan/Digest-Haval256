@@ -12,8 +12,7 @@ MODULE = Digest::Haval256		PACKAGE = Digest::Haval256
 PROTOTYPES: DISABLE
 
 Digest::Haval256
-new(class)
-    SV* class
+new(...)
     CODE:
     {
         Newz(0, RETVAL, 1, struct haval);
