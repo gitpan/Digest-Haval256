@@ -430,7 +430,7 @@ void haval_end(haval_state *state, unsigned char *final_fpt)
   uint2ch (state->fingerprint, final_fpt, FPTLEN >> 5);
 
   /* clear the state information */
-  memset((unsigned char *)state, 0, sizeof (*state));
+  /* memset((unsigned char *)state, 0, sizeof (*state)); */
 }
 
 /* hash a 32-word block */

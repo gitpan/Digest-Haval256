@@ -15,18 +15,25 @@ print "number of rounds=", $haval->rounds, "\n\n";
 
 $haval->add($string1);
 my $digest = $haval->hexdigest();
-print "Hash string1 only\n";
+print "1. Hash string1 only\n";
 print "$digest\n\n";
 
 $haval->reset();
 $haval->add($string1, $string2);
 my $digest2 = $haval->hexdigest();
-print "Hash string1 and then hash string2\n";
+print "2. Hash string1 and then hash string2\n";
 print "$digest2\n\n";
 
 $haval->reset();
 $haval->add($string3);
-print "Hash the two concatenated strings\n";
+print "3. Hash the two concatenated strings\n";
 my $digest3 = $haval->hexdigest();
-print "$digest3\n";
+print "$digest3\n\n";
+
+$haval->reset();
+$haval->add($string1);
+$haval->add($string2);
+print "4. Hash the two concatenated strings\n";
+my $digest4 = $haval->hexdigest();
+print "$digest4\n";
 
