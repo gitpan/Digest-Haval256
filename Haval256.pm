@@ -6,7 +6,7 @@ use MIME::Base64;
 require Exporter;
 
 our @EXPORT_OK = qw(new hashsize rounds reset add addfile digest hexdigest base64digest);
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 our @ISA = qw(Exporter);
 
 require XSLoader;
@@ -19,13 +19,13 @@ sub addfile
     no strict 'refs';
     my ($self, $handle) = @_;
     my ($package, $file, $line) = caller;
-    my $data = ' ' x 1024;
+    my $data = ' ' x 1048576;   # 2^20
 
     if (!ref($handle)) {
         $handle = "$package::$handle" unless ($handle =~ /(\:\:|\')/);
     }
 
-    while (read($handle, $data, 1024)) {
+    while (read($handle, $data, 1048576)) {
         $self->add($data);
     }
 }
@@ -52,7 +52,7 @@ Digest::Haval256 - A 5-round, 256-bit one-way hash function
 
 =head1 ABSTRACT
 
-Digest::Haval256 is a 5-round, 256-bit one-way hash function
+Haval is a variable-length, variable-round one-way hash function.
 
 =head1 SYNOPSIS
 
@@ -61,6 +61,7 @@ Digest::Haval256 is a 5-round, 256-bit one-way hash function
     $haval = new Digest::Haval256;
     $haval->add(LIST);
     $haval->addfile(*HANDLE);
+    $haval->reset();
 
     $digest = $haval->digest();
     $digest = $haval->hexdigest();
@@ -82,11 +83,11 @@ implements the 5-round, 256-bit output.
 
 =over
 
-=item B<hashsize>
+=item B<hashsize()>
 
 Returns the size (in bytes) of the hash (32, in this case)
 
-=item B<rounds>
+=item B<rounds()>
 
 Returns the number of rounds used (5, in this case)
 
@@ -98,9 +99,14 @@ Hashes a string or a list of strings
 
 Hashes a file
 
+=item B<reset()>
+
+Re-initializes the hash state. Before calculating another digest, the
+hash state must be refreshed.
+
 =item B<digest()>
 
-Generates a 32-byte binary string
+Generates the hash output (a 32-byte binary string)
 
 =item B<hexdigest()>
 
@@ -135,16 +141,16 @@ must be installed first for this function to work.
     print "Hash string1 only\n";
     print "$digest\n\n";
 
-    my $haval2 = new Digest::Haval256;
-    $haval2->add($string1, $string2);
-    my $digest2 = $haval2->hexdigest();
+    $haval->reset();
+    $haval->add($string1, $string2);
+    my $digest2 = $haval->hexdigest();
     print "Hash string1 and then hash string2\n";
     print "$digest2\n\n";
-
-    my $haval3 = new Digest::Haval256;
-    $haval3->add($string3);
+    
+    $haval->reset();
+    $haval->add($string3);
     print "Hash the two concatenated strings\n";
-    my $digest3 = $haval3->hexdigest();
+    my $digest3 = $haval->hexdigest();
     print "$digest3\n";
 
 =head1 EXAMPLE 2

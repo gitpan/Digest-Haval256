@@ -18,15 +18,15 @@ my $digest = $haval->hexdigest();
 print "Hash string1 only\n";
 print "$digest\n\n";
 
-my $haval2 = new Digest::Haval256;
-$haval2->add($string1, $string2);
-my $digest2 = $haval2->hexdigest();
+$haval->reset();
+$haval->add($string1, $string2);
+my $digest2 = $haval->hexdigest();
 print "Hash string1 and then hash string2\n";
 print "$digest2\n\n";
 
-my $haval3 = new Digest::Haval256;
-$haval3->add($string3);
+$haval->reset();
+$haval->add($string3);
 print "Hash the two concatenated strings\n";
-my $digest3 = $haval3->hexdigest();
+my $digest3 = $haval->hexdigest();
 print "$digest3\n";
 
