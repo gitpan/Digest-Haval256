@@ -6,7 +6,7 @@ use MIME::Base64;
 require Exporter;
 
 our @EXPORT_OK = qw(new hashsize rounds reset add addfile digest hexdigest base64digest);
-our $VERSION = '1.0.4';
+our $VERSION = '1.0.5';
 our @ISA = qw(Exporter);
 
 require XSLoader;
@@ -83,7 +83,7 @@ implements the 5-round, 256-bit output.
 
 =item B<hashsize()>
 
-Returns the size (in bytes) of the hash (32, in this case)
+Returns the size (in bits) of the hash (256, in this case)
 
 =item B<rounds()>
 

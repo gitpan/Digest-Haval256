@@ -8,7 +8,6 @@ INSTALL
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
-META.yml
 ppport.h
 README
 t/01.t
@@ -31,3 +30,4 @@ t/file5.test
 t/file6.test
 t/loading.t
 typemap
+META.yml                                 Module meta-data (added by MakeMaker)
